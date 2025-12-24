@@ -5,12 +5,14 @@ public class NoteModel {
     String title,description;
 
     int id;
+    long createdTime;
 
 
-    public NoteModel(String title, String description, int id) {
+    public NoteModel(String title, String description, int id, long createdTime) {
         this.title = title;
         this.description = description;
         this.id = id;
+        this.createdTime = createdTime;
     }
 
 
@@ -36,5 +38,12 @@ public class NoteModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
     }
 }

@@ -15,7 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
@@ -62,7 +66,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         holder.tvTitle.setText(arrayList.get(position).getTitle());
         holder.tvDesc.setText(arrayList.get(position).getDescription());
-
+        long date = arrayList.get(position).getCreatedTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "dd/MM/yyyy HH:mm",
+                Locale.getDefault()
+        );
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+        String timeText = sdf.format(new Date(date));
+        if (date > 0) {
+            holder.tvDate.setText(sdf.format(new Date(date)));
+        } else {
+            holder.tvDate.setText("");
+        }
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -106,6 +121,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 intent.putExtra("title",arrayList.get(position).getTitle());
                 intent.putExtra("description",arrayList.get(position).getDescription());
                 intent.putExtra("id",arrayList.get(position).getId());
+                intent.putExtra("createdTime",arrayList.get(position).getCreatedTime());
                 context.startActivity(intent);
             }
         });
@@ -117,13 +133,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle,tvDesc;
+        TextView tvTitle,tvDesc, tvDate;
         CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDesc = itemView.findViewById(R.id.tvDesc);
             cardView = itemView.findViewById(R.id.cardView);
+            tvDate = itemView.findViewById(R.id.date_txt);
         }
     }
 }

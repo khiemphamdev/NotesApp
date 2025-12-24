@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = noteHelper.showData();
 
         while (cursor.moveToNext()){
-            arrayList.add(new NoteModel(cursor.getString(1),cursor.getString(2),cursor.getInt(0)));
+            arrayList.add(new NoteModel(cursor.getString(1),cursor.getString(2),cursor.getInt(0), cursor.getLong(3)));
         }
 
 
